@@ -13,10 +13,25 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+def input  = null
 task bali(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     new File("${buildDir}/resources/main/input/").listFiles().each {
-        standardInput = new FileInputStream(it)
-        main = "hashcode.Main"
+        if (it.isFile()) {
+        print "Nom du fichier ${it.name}\n"
+            input = it
+            //baliExec
+
+            standardInput = new FileInputStream(input)
+            main = "hashcode.Main"
+
+        }
     }
+}
+
+task baliExec(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    standardInput = new FileInputStream(input)
+    main = "hashcode.Main"
+
 }
