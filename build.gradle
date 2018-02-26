@@ -14,24 +14,40 @@ dependencies {
 }
 
 def input  = null
+def output = null
+
 task bali(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     new File("${buildDir}/resources/main/input/").listFiles().each {
+        // FIXME gerer de multiples appels au Main, a l'heure actuelle on ne fait qu'un appel
         if (it.isFile()) {
-        print "Nom du fichier ${it.name}\n"
+            print "Nom du fichier ${it.name}\n"
             input = it
-            //baliExec
-
+            output = it.name.split("\\.")[0] + ".out"
             standardInput = new FileInputStream(input)
+            standardOutput = new FileOutputStream("${buildDir}/$output")
             main = "hashcode.Main"
-
+            tasks.bali2.execute()
         }
     }
-}
 
-task baliExec(type: JavaExec) {
-    classpath sourceSets.main.runtimeClasspath
-    standardInput = new FileInputStream(input)
-    main = "hashcode.Main"
+    doLast {
+        //standardInput.close()
+        //standardOutput.close()
+
+        println 'Ecriture du fichier'
+    }
 
 }
+task bali2 {
+    print "bali 2"
+}
+/*
+task baliWrite(dependsOn: 'bali') {
+    new File("${buildDir}/$output").write('output')
+}
+*/
+
+// TODO zip des sources
+
+// TODO appel envoi source
