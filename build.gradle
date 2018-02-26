@@ -14,8 +14,9 @@ dependencies {
 }
 
 task bali(type: JavaExec) {
-    standardInput = System.in
     classpath sourceSets.main.runtimeClasspath
-    main = "hashcode.Bali"
-    args " 7 1 2 3 4"
+    new File("${buildDir}/resources/main/input/").listFiles().each {
+        standardInput = new FileInputStream(it)
+        main = "hashcode.Bali"
+    }
 }

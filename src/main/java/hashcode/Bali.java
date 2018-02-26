@@ -8,7 +8,7 @@ public class Bali {
 
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
-        System.out.println(scan.nextInt());
+        System.out.println("test " + scan.nextInt());
         /*
         String input = "example.in";
         String output = input.split("\\.")[0] + ".out";
