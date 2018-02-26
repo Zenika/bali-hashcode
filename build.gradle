@@ -13,41 +13,29 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-def input  = null
-def output = null
-
-task bali(type: JavaExec) {
-    classpath sourceSets.main.runtimeClasspath
-    new File("${buildDir}/resources/main/input/").listFiles().each {
-        // FIXME gerer de multiples appels au Main, a l'heure actuelle on ne fait qu'un appel
-        if (it.isFile()) {
-            print "Nom du fichier ${it.name}\n"
-            input = it
-            output = it.name.split("\\.")[0] + ".out"
-            standardInput = new FileInputStream(input)
-            standardOutput = new FileOutputStream("${buildDir}/$output")
-            main = "hashcode.Main"
-            tasks.bali2.execute()
-        }
-    }
-
-    doLast {
-        //standardInput.close()
-        //standardOutput.close()
-
-        println 'Ecriture du fichier'
-    }
-
-}
-task bali2 {
-    print "bali 2"
-}
-/*
-task baliWrite(dependsOn: 'bali') {
-    new File("${buildDir}/$output").write('output')
-}
-*/
-
 // TODO zip des sources
 
 // TODO appel envoi source
+
+
+new File("${buildDir}/resources/main/input/").listFiles().each {
+    input ->
+    // FIXME gerer de multiples appels au Main, a l'heure actuelle on ne fait qu'un appel
+    if (input.isFile()) {
+        task "bali${input.name}"(type: JavaExec) {
+            print "Nom du fichier ${input.name}\n"
+            def output = input.name.split("\\.")[0] + ".out"
+            print "Nom de la sortie ${output}\n"
+            standardInput = new FileInputStream(input.absoluteFile)
+            standardOutput = new FileOutputStream("${buildDir}/$output")
+            main = "hashcode.Main"
+        }
+    }
+}
+
+
+task baliAll {
+    print "All"
+    dependsOn 'baliexample.in'
+    dependsOn 'balismall.in'
+}
