@@ -19,5 +19,10 @@ public class Main {
                 pizza.cells[i][j] = line.charAt(j) == 'T';
             }
         }
+        // TODO Algo
+        System.out.println(pizza.slices.size());
+        for (Slice slice : pizza.slices) {
+            System.out.printf("%d %d %d %d %n", slice.r1, slice.c1, slice.r2, slice.c2);
+        }
     }
 }
