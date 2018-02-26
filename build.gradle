@@ -17,6 +17,6 @@ task bali(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
     new File("${buildDir}/resources/main/input/").listFiles().each {
         standardInput = new FileInputStream(it)
-        main = "hashcode.Bali"
+        main = "hashcode.Main"
     }
 }
