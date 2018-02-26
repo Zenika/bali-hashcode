@@ -12,3 +12,10 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+task bali(type: JavaExec) {
+    standardInput = System.in
+    classpath sourceSets.main.runtimeClasspath
+    main = "hashcode.Bali"
+    args " 7 1 2 3 4"
+}
