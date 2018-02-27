@@ -1,0 +1,13 @@
+# Hashcode 2018
+
+# Génération de la sortie
+Tâche Gradle `bali-All`, va générer dans `build/libs` :
+
+* les fichiers de sorties pour tous les fichiers d'entrée contenus dans src/main/resources/input
+* le code source
+
+
+
+## FAQ
+### Problème de lock sur les fichiers de sortie
+`gradlew.bat --stop`
