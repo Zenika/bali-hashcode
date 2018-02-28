@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 group 'hashcode.bali'
 version '1.0-SNAPSHOT'
 
@@ -12,8 +15,8 @@ repositories {
 dependencies {
 }
 
-def inputs = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
-inputs.each {
+def inputFiles = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
+inputFiles.each {
     input ->
         def fichierSansExtension = input.name.split("\\.")[0]
         tasks.create(name: "generate-$fichierSansExtension", type: BaliTask, group: 'hashcode') {
@@ -35,10 +38,19 @@ class BaliTask extends JavaExec {
         super.exec()
         print "Output : ${outputFile}\n"
     }
+    @InputFile
+    def getInputFile() {
+        return inputFile
+    }
+
+    @OutputFile
+    def getOutputFile() {
+        return Paths.get(outputFile).toFile()
+    }
 }
 
 task generateAll (group: 'hashcode') {
-    inputs.each {
+    inputFiles.each {
         dependsOn "generate-${it.name.split("\\.")[0]}"
     }
     dependsOn 'sourcesJar'
@@ -55,6 +67,8 @@ task download (type: Exec, group: 'hashcode') {
 }
 
 task submit (type: Exec, group: 'hashcode') {
+    inputs.files(fileTree("${buildDir}/libs/"))
+    outputs.files(fileTree("${buildDir}/libs/"))
     dependsOn 'generateAll'
     def cmd = npmCommand('npm run upload --prefix ../hash-code-2018-training/')
     commandLine cmd
