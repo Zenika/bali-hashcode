@@ -1,13 +1,122 @@
 # Hashcode 2018
 
-# Génération de la sortie
-Tâche Gradle `bali-All`, va générer dans `build/libs` :
+https://github.com/Zenika/bali-hashcode
+
+## Configuration de l'outillage d'Hugo
+
+Faire dans le dossier parent de bali-hashcode
+`git clone https://github.com/fnegre/hash-code-2018-training/`
+
+Créer un fichier .env à la racine de ce projet
+(Mettre un token valide en le récupérant quand le devtools du judge quand on fait soumission manuel, requête createurl)
+```
+HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
+DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
+BUILD_DIR=../bali-hashcode/build/libs/
+GIT_TAG_ENABLED=false
+```
+
+Nécessite node.
+Faire un `npm install`
+
+Le résultat est donc un répertoire parent contenant :
+
+* bali-hashcode
+** Code source de bali-hashcode
+* hash-code-2018-training
+** .env créé
+** Code source de hash-code-2018-training
+
+## Téléchargement des fichiers input + problème
+`gradle bali-download`
+
+Va télécharger les fichiers dans src/main/resources/input
+
+## Génération des fichiers de sortie
+
+`gradle bali-generate-outputs`
+
+Va générer dans `build/libs` :
 
 * les fichiers de sorties pour tous les fichiers d'entrée contenus dans src/main/resources/input
 * le code source
 
+## Soumission des scores
+`gradle submit`
+Fait aussi appel à la génération des fichiers de sortie.
+Sortie console :
+```
+14:38:26: Executing task 'bali-submit'...
 
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:bali-1-example
+Ecriture de la sortie C:\Users\negre\dev\sources\zenika\bali-hashcode\build/libs/1-example.out.txt
+:bali-2-small
+Ecriture de la sortie C:\Users\negre\dev\sources\zenika\bali-hashcode\build/libs/2-small.out.txt
+:bali-3-medium
+Ecriture de la sortie C:\Users\negre\dev\sources\zenika\bali-hashcode\build/libs/3-medium.out.txt
+:bali-4-big
+Ecriture de la sortie C:\Users\negre\dev\sources\zenika\bali-hashcode\build/libs/4-big.out.txt
+:sourcesJar UP-TO-DATE
+:bali-generate-outputs
+:bali-submit
+
+> hash-code-2018-training@1.0.0 upload C:\Users\negre\dev\sources\zenika\hash-code-2018-training
+> cross-env DEBUG=* node -r dotenv/config ./upload
+
+Wed, 28 Feb 2018 13:38:29 GMT upload token ya29.Gl1wBXcTHKwTJlr...
+Wed, 28 Feb 2018 13:38:29 GMT upload found data set '1-example' in package.json
+Wed, 28 Feb 2018 13:38:29 GMT upload found data set '2-small' in package.json
+Wed, 28 Feb 2018 13:38:29 GMT upload found data set '3-medium' in package.json
+Wed, 28 Feb 2018 13:38:29 GMT upload found data set '4-big' in package.json
+Wed, 28 Feb 2018 13:38:29 GMT upload files to upload { '1-example': '../bali-hashcode/build/libs/1-example.out.txt',
+  '2-small': '../bali-hashcode/build/libs/2-small.out.txt',
+  '3-medium': '../bali-hashcode/build/libs/3-medium.out.txt',
+  '4-big': '../bali-hashcode/build/libs/4-big.out.txt',
+  sources: 'C:\\Users\\negre\\dev\\sources\\zenika\\bali-hashcode\\build\\libs\\bali-1.0-SNAPSHOT-sources.jar' }
+Wed, 28 Feb 2018 13:38:29 GMT upload uploading ../bali-hashcode/build/libs/2-small.out.txt to https://hashcode-jud...
+Wed, 28 Feb 2018 13:38:29 GMT upload uploading ../bali-hashcode/build/libs/1-example.out.txt to https://hashcode-jud...
+Wed, 28 Feb 2018 13:38:29 GMT upload uploading ../bali-hashcode/build/libs/4-big.out.txt to https://hashcode-jud...
+Wed, 28 Feb 2018 13:38:29 GMT upload uploading C:\Users\negre\dev\sources\zenika\bali-hashcode\build\libs\bali-1.0-SNAPSHOT-sources.jar to https://hashcode-jud...
+Wed, 28 Feb 2018 13:38:29 GMT upload uploading ../bali-hashcode/build/libs/3-medium.out.txt to https://hashcode-jud...
+Wed, 28 Feb 2018 13:38:30 GMT upload uploaded ../bali-hashcode/build/libs/2-small.out.txt (key: blob/AMIfv96lXsXQg85...)
+Wed, 28 Feb 2018 13:38:30 GMT upload uploaded C:\Users\negre\dev\sources\zenika\bali-hashcode\build\libs\bali-1.0-SNAPSHOT-sources.jar (key: blob/AMIfv97H19zT-YO...)
+Wed, 28 Feb 2018 13:38:30 GMT upload uploaded ../bali-hashcode/build/libs/1-example.out.txt (key: blob/AMIfv95W_23fucY...)
+Wed, 28 Feb 2018 13:38:30 GMT upload uploaded ../bali-hashcode/build/libs/4-big.out.txt (key: blob/AMIfv97wQ8U3rxl...)
+Wed, 28 Feb 2018 13:38:30 GMT upload uploaded ../bali-hashcode/build/libs/3-medium.out.txt (key: blob/AMIfv97m66qJM9w...)
+Wed, 28 Feb 2018 13:38:30 GMT upload submitting 1-example (key: blob/AMIfv95W_23fucY...)
+Wed, 28 Feb 2018 13:38:30 GMT upload submitting 2-small (key: blob/AMIfv96lXsXQg85...)
+Wed, 28 Feb 2018 13:38:30 GMT upload submitting 3-medium (key: blob/AMIfv97m66qJM9w...)
+Wed, 28 Feb 2018 13:38:30 GMT upload submitting 4-big (key: blob/AMIfv97wQ8U3rxl...)
+Wed, 28 Feb 2018 13:38:31 GMT upload submitted 1-example (id: 5394227500417024)
+Wed, 28 Feb 2018 13:38:31 GMT upload submitted 2-small (id: 6320093063544832)
+Wed, 28 Feb 2018 13:38:31 GMT upload submitted 3-medium (id: 5388085965619200)
+Wed, 28 Feb 2018 13:38:31 GMT upload submitted 4-big (id: 5479129340182528)
+Wed, 28 Feb 2018 13:38:31 GMT upload waiting for score on 1-example
+Wed, 28 Feb 2018 13:38:31 GMT upload waiting for score on 2-small
+Wed, 28 Feb 2018 13:38:31 GMT upload waiting for score on 3-medium
+Wed, 28 Feb 2018 13:38:31 GMT upload waiting for score on 4-big
+Wed, 28 Feb 2018 13:38:32 GMT upload polling score for 1-example
+Wed, 28 Feb 2018 13:38:32 GMT upload polling score for 2-small
+Wed, 28 Feb 2018 13:38:32 GMT upload polling score for 3-medium
+Wed, 28 Feb 2018 13:38:32 GMT upload polling score for 4-big
+Wed, 28 Feb 2018 13:38:32 GMT upload got score for 1-example: 15
+Wed, 28 Feb 2018 13:38:32 GMT upload error for 2-small: 6 cells in slice 0 exceeds the maximum number of cells in a slice.
+Wed, 28 Feb 2018 13:38:32 GMT upload error for 3-medium: 3 pieces of tomato on slice 0 is not enough.
+Wed, 28 Feb 2018 13:38:32 GMT upload error for 4-big: 3 pieces of tomato on slice 0 is not enough.
+Wed, 28 Feb 2018 13:38:32 GMT upload got overall score: 15
+Wed, 28 Feb 2018 13:38:32 GMT upload tagging
+
+BUILD SUCCESSFUL in 5s
+8 actionable tasks: 5 executed, 3 up-to-date
+14:38:32: Task execution finished 'bali-submit'.
+
+```
 
 ## FAQ
 ### Problème de lock sur les fichiers de sortie
+
+C'est du au daemon Gradle, pour le stopper :
 `gradlew.bat --stop`

@@ -15,11 +15,11 @@ dependencies {
 
 // TODO appel envoi source
 
-def inputs = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile()}
+def inputs = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
 inputs.each {
     input ->
         def fichierSansExtension = input.name.split("\\.")[0]
-        def output = "${buildDir}/libs/${fichierSansExtension}.out"
+        def output = "${buildDir}/libs/${fichierSansExtension}.out.txt"
     task "bali-${fichierSansExtension}" (type: JavaExec, group: 'hashcode') {
         classpath sourceSets.main.runtimeClasspath
         standardInput = new FileInputStream(input.absoluteFile)
@@ -35,7 +35,7 @@ inputs.each {
     }
 }
 
-task 'bali-All' (group: 'hashcode') {
+task 'bali-generate-outputs' (group: 'hashcode') {
     inputs.each {
         dependsOn "bali-${it.name.split("\\.")[0]}"
     }
@@ -45,4 +45,22 @@ task 'bali-All' (group: 'hashcode') {
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allJava
+}
+
+task 'bali-download' (type: Exec, group: 'hashcode') {
+    def cmd = npmCommand('npm run download --prefix ../hash-code-2018-training/')
+    commandLine cmd.split(' ')
+}
+
+task 'bali-submit' (type: Exec, group: 'hashcode') {
+    dependsOn 'bali-generate-outputs'
+    def cmd = npmCommand('npm run upload --prefix ../hash-code-2018-training/')
+    commandLine cmd.split(' ')
+}
+
+def npmCommand(def cmd) {
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        cmd =  'cmd /C '.concat(cmd)
+    }
+    cmd
 }
