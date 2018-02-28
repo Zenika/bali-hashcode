@@ -42,7 +42,7 @@ Va générer dans `build/libs` :
 * le code source
 
 ## Soumission des scores
-`gradle submit`
+`gradle bali-submit`
 Fait aussi appel à la génération des fichiers de sortie.
 Sortie console :
 ```
