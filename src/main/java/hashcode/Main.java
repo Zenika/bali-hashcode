@@ -20,12 +20,9 @@ public class Main {
                 pizza.cells[i][j] = line.charAt(j) == 'T';
             }
         }
-        // TODO Algo
 
+        Solution.resolve(pizza);
 
-        pizza.slices.add(new Slice(0, 0, 2, 1));
-        pizza.slices.add(new Slice(0, 2, 2, 2));
-        pizza.slices.add(new Slice(0, 3, 2, 4));
         System.out.println(pizza.slices.size());
         for (Slice slice : pizza.slices) {
             System.out.printf("%d %d %d %d %n", slice.r1, slice.c1, slice.r2, slice.c2);
