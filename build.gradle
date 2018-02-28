@@ -1,4 +1,3 @@
-import java.nio.file.Files
 import java.nio.file.Paths
 
 group 'hashcode.bali'
@@ -14,6 +13,8 @@ repositories {
 
 dependencies {
 }
+
+def npmToolsDir = '../hash-code-2018-training'
 
 def inputFiles = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
 inputFiles.each {
@@ -62,7 +63,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 task download (type: Exec, group: 'hashcode') {
-    def cmd = npmCommand('npm run download --prefix ../hash-code-2018-training/')
+    def cmd = commandExec('npm run download --prefix ../hash-code-2018-training/')
     commandLine cmd
 }
 
@@ -70,11 +71,31 @@ task submit (type: Exec, group: 'hashcode') {
     inputs.files(fileTree("${buildDir}/libs/"))
     outputs.files(fileTree("${buildDir}/libs/"))
     dependsOn 'generateAll'
-    def cmd = npmCommand('npm run upload --prefix ../hash-code-2018-training/')
+    def cmd = commandExec('npm run upload --prefix ../hash-code-2018-training/')
     commandLine cmd
 }
 
-def npmCommand(def cmd) {
+task gitCloneHugoTool(type: Exec, group: 'hashcode init env') {
+    def cmd = commandExec('git clone https://github.com/fnegre/hash-code-2018-training/ ../hash-code-2018-training')
+    commandLine cmd
+}
+
+task npmInstallHugoTool(type: Exec, group: 'hashcode init env') {
+    def cmd = commandExec('npm install --prefix ../hash-code-2018-training/')
+    commandLine cmd
+}
+
+task createEnvFIle(group: 'hashcode init env') {
+    new File("${npmToolsDir}/.env").write(
+"""HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
+DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
+BUILD_DIR=../bali-hashcode/build/libs/
+GIT_TAG_ENABLED=false
+"""
+    )
+}
+
+def commandExec(def cmd) {
     if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
         cmd =  'cmd /C '.concat(cmd)
     }
