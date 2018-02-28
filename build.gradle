@@ -10,34 +10,36 @@ repositories {
 }
 
 dependencies {
-    //testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
-// TODO appel envoi source
 
 def inputs = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
 inputs.each {
     input ->
         def fichierSansExtension = input.name.split("\\.")[0]
-        def output = "${buildDir}/libs/${fichierSansExtension}.out.txt"
-    task "bali-${fichierSansExtension}" (type: JavaExec, group: 'hashcode') {
-        classpath sourceSets.main.runtimeClasspath
-        standardInput = new FileInputStream(input.absoluteFile)
-        def outputStream = new FileOutputStream(output)
-        standardOutput = outputStream
-        main = "hashcode.Main"
-        doLast {
-            print "Ecriture de la sortie ${output}\n"
-            // eviter les locks sur les fichiers
-            outputStream.withCloseable {it.close()}
-            standardOutput = System.out
+        tasks.create(name: "generate-$fichierSansExtension", type: BaliTask, group: 'hashcode') {
+            inputFile input
+            outputFile "${buildDir}/libs/${fichierSansExtension}.out.txt"
+            classpath sourceSets.main.runtimeClasspath
+            main = "hashcode.Main"
         }
+}
+
+class BaliTask extends JavaExec {
+    def inputFile
+    def outputFile
+    @TaskAction
+    void exec() {
+        print "Input : ${inputFile}\n"
+        standardInput = new FileInputStream(inputFile)
+        standardOutput = new FileOutputStream(outputFile)
+        super.exec()
+        print "Output : ${outputFile}\n"
     }
 }
 
-task 'bali-generate-outputs' (group: 'hashcode') {
+task generateAll (group: 'hashcode') {
     inputs.each {
-        dependsOn "bali-${it.name.split("\\.")[0]}"
+        dependsOn "generate-${it.name.split("\\.")[0]}"
     }
     dependsOn 'sourcesJar'
 }
@@ -47,20 +49,20 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allJava
 }
 
-task 'bali-download' (type: Exec, group: 'hashcode') {
+task download (type: Exec, group: 'hashcode') {
     def cmd = npmCommand('npm run download --prefix ../hash-code-2018-training/')
-    commandLine cmd.split(' ')
+    commandLine cmd
 }
 
-task 'bali-submit' (type: Exec, group: 'hashcode') {
-    dependsOn 'bali-generate-outputs'
+task submit (type: Exec, group: 'hashcode') {
+    dependsOn 'generateAll'
     def cmd = npmCommand('npm run upload --prefix ../hash-code-2018-training/')
-    commandLine cmd.split(' ')
+    commandLine cmd
 }
 
 def npmCommand(def cmd) {
     if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
         cmd =  'cmd /C '.concat(cmd)
     }
-    cmd
+    cmd.split(' ')
 }
