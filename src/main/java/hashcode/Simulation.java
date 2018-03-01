@@ -1,6 +1,8 @@
 package hashcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +58,9 @@ public class Simulation {
 
     public static void solution(City city) {
         int i = 0;
+        Collections.sort(city.rides, Comparator.comparingInt(r -> r.earlestStart));
         for (Ride r : city.rides) {
-            while (!(city.vehicles.get(i).addRide(r, city))) {
+            while (i < city.nbVehicules && !(city.vehicles.get(i).addRide(r, city))) {
                 i++;
             }
         }
