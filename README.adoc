@@ -5,7 +5,7 @@ https://github.com/Zenika/bali-hashcode
 ## Configuration de l'outillage d'Hugo
 
 Faire dans le dossier parent de bali-hashcode
-`git clone https://github.com/fnegre/hash-code-2018-training/`
+`git clone https://github.com/hgwood/hash-code-2018-training/`
 
 Créer un fichier .env à la racine de ce projet
 (Mettre un token valide en le récupérant quand le devtools du judge quand on fait soumission manuel, requête createurl)
@@ -13,7 +13,7 @@ Créer un fichier .env à la racine de ce projet
 HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
 DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
 BUILD_DIR=../bali-hashcode/build/libs/
-GIT_TAG_ENABLED=false
+TAG_ON_UPLOAD=false
 ```
 
 Nécessite node.

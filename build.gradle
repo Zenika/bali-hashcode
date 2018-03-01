@@ -76,7 +76,7 @@ task submit (type: Exec, group: 'hashcode') {
 }
 
 task gitCloneHugoTool(type: Exec, group: 'hashcode init env') {
-    def cmd = commandExec('git clone https://github.com/fnegre/hash-code-2018-training/ ../hash-code-2018-training')
+    def cmd = commandExec('git clone https://github.com/hgwood/hash-code-2018-training/ ../hash-code-2018-training')
     commandLine cmd
 }
 
@@ -84,20 +84,21 @@ task npmInstallHugoTool(type: Exec, group: 'hashcode init env') {
     def cmd = commandExec('npm install --prefix ../hash-code-2018-training/')
     commandLine cmd
 }
-
+/*
 task createEnvFIle(group: 'hashcode init env') {
     new File("${npmToolsDir}/.env").write(
 """HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
 DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
 BUILD_DIR=../bali-hashcode/build/libs/
-GIT_TAG_ENABLED=false
+TAG_ON_UPLOAD=false
 """
     )
-}
+}*/
 
 def commandExec(def cmd) {
     if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
         cmd =  'cmd /C '.concat(cmd)
     }
+    println cmd
     cmd.split(' ')
 }
