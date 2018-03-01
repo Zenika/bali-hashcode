@@ -1,6 +1,5 @@
 package hashcode;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -31,7 +30,7 @@ public class Main {
             ride.latestFinish = scanner.nextInt();
             city.rides.add(ride);
         }
-        Simulation.simpleSolution3(city);
+        Simulation.solution(city);
         // TODO Resolve
 
         printVehicules(city.vehicles);

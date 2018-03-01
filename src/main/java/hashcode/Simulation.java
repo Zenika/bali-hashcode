@@ -54,6 +54,15 @@ public class Simulation {
         }
     }
 
+    public static void solution(City city) {
+        int i = 0;
+        for (Ride r : city.rides) {
+            while (!(city.vehicles.get(i).addRide(r, city))) {
+                i++;
+            }
+        }
+    }
+
     public static void simpleSolution3(City city) {
         List<Vehicle> availableVehicles = city.vehicles;
         for (int currentStep = 0; currentStep < city.steps && city.rides.size() > 0; currentStep++) {
