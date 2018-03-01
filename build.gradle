@@ -15,14 +15,17 @@ dependencies {
 }
 
 def npmToolsDir = '../hash-code-2018-training'
+def npmRepoUrl = 'https://github.com/hgwood/hash-code-2018-training/'
+def solutionsDir = "${buildDir}/solutions"
+def inputDir = "${buildDir}/resources/main/input/"
 
-def inputFiles = new File("${buildDir}/resources/main/input/").listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
+def inputFiles = new File(inputDir).listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
 inputFiles.each {
     input ->
         def fichierSansExtension = input.name.split("\\.")[0]
         tasks.create(name: "generate-$fichierSansExtension", type: BaliTask, group: 'hashcode') {
             inputFile input
-            outputFile "${buildDir}/libs/${fichierSansExtension}.out.txt"
+            outputFile "${solutionsDir}/${fichierSansExtension}.out.txt"
             classpath sourceSets.main.runtimeClasspath
             main = "hashcode.Main"
         }
@@ -63,7 +66,8 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 task download (type: Exec, group: 'hashcode') {
-    def cmd = commandExec('npm run download --prefix ../hash-code-2018-training/')
+    workingDir npmToolsDir
+    def cmd = commandExec('npm run download')
     commandLine cmd
 }
 
@@ -71,34 +75,39 @@ task submit (type: Exec, group: 'hashcode') {
     inputs.files(fileTree("${buildDir}/libs/"))
     outputs.files(fileTree("${buildDir}/libs/"))
     dependsOn 'generateAll'
-    def cmd = commandExec('npm run upload --prefix ../hash-code-2018-training/')
+    workingDir npmToolsDir
+    def cmd = commandExec('npm run upload')
     commandLine cmd
 }
 
 task gitCloneHugoTool(type: Exec, group: 'hashcode init env') {
-    def cmd = commandExec('git clone https://github.com/hgwood/hash-code-2018-training/ ../hash-code-2018-training')
+    workingDir '../'
+    def cmd = commandExec("git clone $npmRepoUrl")
     commandLine cmd
 }
 
 task npmInstallHugoTool(type: Exec, group: 'hashcode init env') {
-    def cmd = commandExec('npm install --prefix ../hash-code-2018-training/')
+    workingDir npmToolsDir
+    def cmd = commandExec('npm install')
     commandLine cmd
 }
-/*
+
 task createEnvFIle(group: 'hashcode init env') {
-    new File("${npmToolsDir}/.env").write(
-"""HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
-DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
-BUILD_DIR=../bali-hashcode/build/libs/
-TAG_ON_UPLOAD=false
-"""
-    )
-}*/
+    doLast {
+        def token = ant.input(message: '> Veuillez entrer votre token: ',  addproperty: 'token')
+        new File("${npmToolsDir}/.env").write("""\
+            |HASH_CODE_JUDGE_AUTH_TOKEN=$ant.token
+            |DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
+            |BUILD_DIR=../bali-hashcode/build/libs/
+            |SOLUTION_DIR=../bali-hashcode/build/solutions/
+            |TAG_ON_UPLOAD=false
+            """.stripMargin())
+    }
+}
 
 def commandExec(def cmd) {
     if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
         cmd =  'cmd /C '.concat(cmd)
     }
-    println cmd
     cmd.split(' ')
 }
