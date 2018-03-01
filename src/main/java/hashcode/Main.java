@@ -19,6 +19,7 @@ public class Main {
         scanner.nextLine();
         for(int i = 0; i < city.nbRides; i++) {
             Ride ride = new Ride();
+            ride.id = i;
             ride.rowStart = scanner.nextInt();
             ride.columnStart = scanner.nextInt();
             ride.rowEnd = scanner.nextInt();
@@ -37,7 +38,7 @@ public class Main {
         for (Vehicle vehicle : vehicles) {
             System.out.print(vehicle.rides.size());
             System.out.print(" ");
-            System.out.println(vehicle.rides.stream().map(r -> Integer.toString(r.latestStart)).collect(Collectors.joining((" "))));
+            System.out.println(vehicle.rides.stream().map(r -> Integer.toString(r.id)).collect(Collectors.joining((" "))));
         }
 
     }
