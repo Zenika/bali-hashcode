@@ -1,5 +1,9 @@
 package hashcode;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public class Simulation {
 
     private City city;
@@ -42,7 +46,31 @@ public class Simulation {
                 city.vehicles.get(j).rides.add(city.rides.get(i));
                 city.vehicles.get(j).currentColumn = city.rides.get(i).columnEnd;
                 city.vehicles.get(j).currentRow = city.rides.get(i).rowEnd;
+                city.vehicles.get(j).currentRide = city.rides.get(i);
             }
         }
+    }
+
+    public static void simpleSolution3(City city) {
+        List<Vehicle> availableVehicles = city.vehicles;
+        List<Ride> availableRides = city.rides;
+        for (int i = 0; i < city.steps; i++) {
+            for (Vehicle vehicle : city.vehicles) {
+                if (vehicle.step == 0) {
+                    Optional<Ride> ride2 = city.rides.stream().filter(r ->
+                            r.available).findFirst();
+                    if (ride2.isPresent()) {
+                        Ride ride = ride2.get();
+                        ride.available = false;
+                        vehicle.currentRide = ride;
+                        vehicle.rides.add(ride);
+                        vehicle.step = Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
+                    }
+                } else {
+                    vehicle.step--;
+                }
+            }
+        }
+
     }
 }

@@ -31,7 +31,7 @@ public class Main {
             ride.latestFinish = scanner.nextInt();
             city.rides.add(ride);
         }
-        Simulation.simpleSolution2(city);
+        Simulation.simpleSolution3(city);
         // TODO Resolve
 
         printVehicules(city.vehicles);

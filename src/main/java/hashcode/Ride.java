@@ -8,4 +8,5 @@ public class Ride {
     int columnEnd;
     int earlestStart;
     int latestFinish;
+    boolean available = true;
 }
