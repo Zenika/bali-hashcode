@@ -1,9 +1,10 @@
 package hashcode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vehicle {
-    List<Ride> rides;
+    List<Ride> rides = new ArrayList<>();
     int currentRow;
     int currentColumn;
     Ride currentRide;

@@ -26,7 +26,7 @@ public class Simulation {
     }
 
     public static void simpleSolution(City city) {
-        for (int i = 0; i < city.nbVehicules; i++) {
+        for (int i = 0; i < Math.min(city.nbVehicules, city.nbRides); i++) {
             city.vehicles.get(i).rides.add(city.rides.get(i));
         }
     }

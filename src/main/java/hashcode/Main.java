@@ -1,6 +1,7 @@
 package hashcode;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,8 @@ public class Main {
         city.rideBonus = scanner.nextInt();
         city.steps = scanner.nextInt();
         scanner.nextLine();
+        for (int v = 0; v < city.nbVehicules; v++)
+            city.vehicles.add(new Vehicle());
         for(int i = 0; i < city.nbRides; i++) {
             Ride ride = new Ride();
             ride.id = i;
@@ -28,13 +31,13 @@ public class Main {
             ride.latestFinish = scanner.nextInt();
             city.rides.add(ride);
         }
-
+        Simulation.simpleSolution(city);
         // TODO Resolve
 
-        printVehicules(new ArrayList<Vehicle>());
+        printVehicules(city.vehicles);
     }
 
-    private static void printVehicules(ArrayList<Vehicle> vehicles) {
+    private static void printVehicules(List<Vehicle> vehicles) {
         for (Vehicle vehicle : vehicles) {
             System.out.print(vehicle.rides.size());
             System.out.print(" ");
