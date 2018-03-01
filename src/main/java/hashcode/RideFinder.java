@@ -7,7 +7,7 @@ public class RideFinder {
     public static Optional<Ride> findClosestRide(City city, int step, Vehicle vehicle) {
         Ride best = null;
         for (Ride ride : city.rides) {
-            if (ride.available || step < ride.earlestStart || step > ride.latestFinish && step + Simulation.nbStepNecessary(ride, vehicle) < city.steps) {
+            if (ride.available || step < ride.earlestStart || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) < city.steps) {
                 continue;
             }
 
