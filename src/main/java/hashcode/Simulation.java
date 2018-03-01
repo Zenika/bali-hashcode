@@ -16,17 +16,20 @@ public class Simulation {
 
     }
 
-
     public static int getDistanceFromStart(Vehicle vehicule, Ride ride) {
-        return Math.abs(vehicule.currentRow - ride.rowStart) + Math.abs(vehicule.currentColumn - ride.columnStart);
+        return  getDistance(vehicule.currentRow, ride.rowStart, vehicule.currentColumn, ride.columnStart);
     }
 
     public static int getDistanceFromEnd(Vehicle vehicule, Ride ride) {
-        return Math.abs(vehicule.currentRow - ride.rowEnd) + Math.abs(vehicule.currentColumn - ride.columnEnd);
+        return getDistance(vehicule.currentRow, ride.rowEnd, vehicule.currentColumn, ride.columnEnd);
     }
 
     public static int getRideDistance(Ride ride) {
-        return ride.columnEnd - ride.columnStart + ride.rowEnd - ride.rowStart;
+        return getDistance(ride.columnEnd, ride.columnStart, ride.rowEnd, ride.rowStart);
+    }
+
+    public static int getDistance(int a, int b, int c, int d) {
+        return Math.abs(a-b) + Math.abs(c-d);
     }
 
     public boolean isEnded() {
