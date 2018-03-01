@@ -18,9 +18,9 @@ public class RideFinder {
 
             int distanceFromStart = Simulation.getDistanceFromStart(vehicle, ride);
             int startStep = step + distanceFromStart;
-            if(startStep < ride.earlestStart) {
+            /*if(startStep < ride.earlestStart) {
                 continue;
-            }
+            }*/
 
             if(best == null) {
                 Simulation.log("best null ride " + ride.id + ", vehiccle " + vehicle.id + " distance start " + distanceFromStart);
