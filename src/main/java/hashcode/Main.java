@@ -1,6 +1,10 @@
 package hashcode;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import static java.lang.String.join;
 
 public class Main {
     public static void main(String[] argv) {
@@ -25,5 +29,16 @@ public class Main {
         }
 
         // TODO Resolve
+
+        printVehicules(new ArrayList<Vehicle>());
+    }
+
+    private static void printVehicules(ArrayList<Vehicle> vehicles) {
+        for (Vehicle vehicle : vehicles) {
+            System.out.print(vehicle.rides.size());
+            System.out.print(" ");
+            System.out.println(vehicle.rides.stream().map(r -> Integer.toString(r.latestStart)).collect(Collectors.joining((" "))));
+        }
+
     }
 }
