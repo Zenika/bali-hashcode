@@ -62,7 +62,7 @@ public class Simulation {
             for (Vehicle vehicle : city.vehicles) {
                 //log("vehicle " + vehicle.id);
                 if (vehicle.nextAvailableStep == currentStep) {
-                    log("vehicle dispo " + vehicle.id);
+                    log("vehicle dispo id " + vehicle.id);
                     Optional<Ride> ride2 = RideFinder.findClosestRide(city, currentStep, vehicle);
                     if (ride2.isPresent()) {
                         Ride ride = ride2.get();
