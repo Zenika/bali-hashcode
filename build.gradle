@@ -43,12 +43,12 @@ class BaliTask extends JavaExec {
         super.exec()
         print "Output : ${outputFile}\n"
     }
-    @InputFile
+    //@InputFile
     def getInputFile() {
         return inputFile
     }
 
-    @OutputFile
+    //@OutputFile
     def getOutputFile() {
         return Paths.get(outputFile).toFile()
     }
