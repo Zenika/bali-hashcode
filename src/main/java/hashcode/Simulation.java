@@ -57,8 +57,7 @@ public class Simulation {
         for (int currentStep = 0; currentStep < city.steps; currentStep++) {
             for (Vehicle vehicle : city.vehicles) {
                 if (vehicle.step == 0) {
-                    Optional<Ride> ride2 = city.rides.stream().filter(r ->
-                            r.available).findFirst();
+                    Optional<Ride> ride2 = RideFinder.findClosestRide(city, currentStep, vehicle);
                     if (ride2.isPresent() && currentStep + nbStepNecessary(ride2.get(), vehicle) < city.steps) {
                         Ride ride = ride2.get();
                         ride.available = false;
@@ -74,7 +73,7 @@ public class Simulation {
 
     }
 
-    static int nbStepNecessary(Ride ride, Vehicle vehicle) {
+    public static int nbStepNecessary(Ride ride, Vehicle vehicle) {
         return Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
     }
 }

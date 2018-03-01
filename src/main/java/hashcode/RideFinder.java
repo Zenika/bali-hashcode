@@ -4,10 +4,10 @@ import java.util.Optional;
 
 public class RideFinder {
 
-    public Optional<Ride> findClosestRide(City city, int step, Vehicle vehicle) {
+    public static Optional<Ride> findClosestRide(City city, int step, Vehicle vehicle) {
         Ride best = null;
         for (Ride ride : city.rides) {
-            if (ride.available || step < ride.earlestStart || step > ride.latestFinish) {
+            if (ride.available || step < ride.earlestStart || step > ride.latestFinish && step + Simulation.nbStepNecessary(ride, vehicle) < city.steps) {
                 continue;
             }
 
@@ -15,6 +15,6 @@ public class RideFinder {
             break;
         }
 
-        return Optional.of(best);
+        return Optional.ofNullable(best);
     }
 }
