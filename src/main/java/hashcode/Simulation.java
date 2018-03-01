@@ -36,6 +36,8 @@ public class Simulation {
         for (int i = 0; i < city.nbRides; i++) {
             for (int j = 0;  i < city.nbRides && j < city.nbVehicules; i++, j++) {
                 city.vehicles.get(j).rides.add(city.rides.get(i));
+                city.vehicles.get(j).currentColumn = city.rides.get(i).columnEnd;
+                city.vehicles.get(j).currentRow = city.rides.get(i).rowEnd;
             }
         }
     }
