@@ -27,7 +27,7 @@ public class Simulation {
 
     public static void simpleSolution(City city) {
         for (int i = 0; i < city.nbVehicules; i++) {
-            city.vehicles[i].rides.add(city.rides[i]);
+            city.vehicles.get(i).rides.add(city.rides.get(i));
         }
     }
 }
