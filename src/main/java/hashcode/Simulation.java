@@ -30,4 +30,13 @@ public class Simulation {
             city.vehicles.get(i).rides.add(city.rides.get(i));
         }
     }
+
+    public static void simpleSolution2(City city) {
+        System.err.print("max" + Math.max(city.nbVehicules, city.nbRides));
+        for (int i = 0; i < city.nbRides; i++) {
+            for (int j = 0;  i < city.nbRides && j < city.nbVehicules; i++, j++) {
+                city.vehicles.get(j).rides.add(city.rides.get(i));
+            }
+        }
+    }
 }
