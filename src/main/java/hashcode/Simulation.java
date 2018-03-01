@@ -57,7 +57,7 @@ public class Simulation {
     public static void simpleSolution3(City city) {
         List<Vehicle> availableVehicles = city.vehicles;
         for (int currentStep = 0; currentStep < city.steps && city.rides.size() > 0; currentStep++) {
-            log("step " + currentStep);
+            logError("step " + currentStep);
             for (Vehicle vehicle : city.vehicles) {
                 //log("vehicle " + vehicle.id);
                 if (vehicle.step == 0) {
@@ -88,5 +88,9 @@ public class Simulation {
     public static void log(String msg) {
         //System.err.println(msg);
         
+    }
+    public static void logError(String msg) {
+        System.err.println(msg);
+
     }
 }
