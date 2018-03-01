@@ -21,6 +21,7 @@ public class Main {
             ride.columnEnd = scanner.nextInt();
             ride.earlestStart = scanner.nextInt();
             ride.latestStart = scanner.nextInt();
+            city.rides.add(ride);
         }
 
         // TODO Resolve
