@@ -10,10 +10,12 @@ public class RideFinder {
         }
         Ride best = null;
         int distanceFromStartBest = Integer.MAX_VALUE;
+        int distanceRideBest = Integer.MAX_VALUE;
         int startStepBest = Integer.MAX_VALUE;
 
         for (Ride ride : city.rides) {
-            if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > ride.latestFinish) {
+            int rideDistance = Simulation.nbStepNecessary(ride, vehicle);
+            if (!ride.available || step > ride.latestFinish || step + rideDistance > ride.latestFinish) {
                 continue;
             }
 
@@ -29,18 +31,20 @@ public class RideFinder {
                 best = ride;
                 distanceFromStartBest = distanceFromStart;
                 startStepBest = startStep;
+                distanceRideBest = rideDistance;
                 //bonusBest = ride.
             } else {
-                if(distanceFromStart + startStep < distanceFromStartBest + startStepBest) {
-                    Simulation.log("meilleur ride " + ride.id + ", vehicle " + vehicle.id + " distance start " + distanceFromStart + ", startstep " + startStep);
-
-                    best = ride;
-                    distanceFromStartBest = distanceFromStart;
-                    startStepBest = startStep;
-                    if (distanceFromStart == 0) {
-                        Simulation.log("Meilleur ride distance 0");
-                        return Optional.ofNullable(best);
-                    }
+                if(distanceFromStartBest - distanceFromStart > 0 && distanceRideBest - rideDistance > 0) {
+                    Simulation.log("ride " + ride.id + ", vehicle " + vehicle.id + " distance start "
+                            + distanceFromStart + ", startstep " + startStep + ", ride distance " + rideDistance);
+                        best = ride;
+                        distanceFromStartBest = distanceFromStart;
+                        startStepBest = startStep;
+                        distanceRideBest = rideDistance;
+                        if (distanceFromStart == 0) {
+                            Simulation.log("Meilleur ride distance 0");
+                            return Optional.ofNullable(best);
+                        }
                 }
             }
         }
