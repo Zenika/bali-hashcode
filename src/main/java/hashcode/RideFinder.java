@@ -10,6 +10,7 @@ public class RideFinder {
             if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > city.steps) {
                 continue;
             }
+            Simulation.log("ok find closest");
 
             if(step + Simulation.getDistanceFromStart(vehicle, ride) < ride.earlestStart) {
                 continue;
