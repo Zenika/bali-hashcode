@@ -56,13 +56,12 @@ public class Simulation {
 
     public static void simpleSolution3(City city) {
         List<Vehicle> availableVehicles = city.vehicles;
-        List<Ride> ridesDone = new ArrayList<>();
-        for (int currentStep = 0; currentStep < city.steps && ridesDone.size() < city.rides.size(); currentStep++) {
+        for (int currentStep = 0; currentStep < city.steps && city.rides.size() > 0; currentStep++) {
             log("step " + currentStep);
             for (Vehicle vehicle : city.vehicles) {
                 //log("vehicle " + vehicle.id);
                 if (vehicle.step == 0) {
-                   // log("vehicle dispo " + vehicle.id);
+                    log("vehicle dispo " + vehicle.id);
                     Optional<Ride> ride2 = RideFinder.findClosestRide(city, currentStep, vehicle);
                     if (ride2.isPresent()) {
                         Ride ride = ride2.get();
@@ -71,7 +70,7 @@ public class Simulation {
                         vehicle.currentRide = ride;
                         vehicle.rides.add(ride);
                         vehicle.step = Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
-                        ridesDone.add(ride);
+                        city.rides.remove(ride);
                     }
                 } else {
                     vehicle.step--;

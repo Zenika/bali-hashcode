@@ -13,13 +13,13 @@ public class RideFinder {
             if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > ride.latestFinish) {
                 continue;
             }
-            //Simulation.log("ok find closest");
 
             int distanceFromStart = Simulation.getDistanceFromStart(vehicle, ride);
             int startStep = step + distanceFromStart;
             if(startStep < ride.earlestStart) {
                 continue;
             }
+            Simulation.log("ok find closest");
 
 
             if(best == null) {
