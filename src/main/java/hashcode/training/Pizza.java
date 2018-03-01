@@ -1,4 +1,4 @@
-package hashcode;
+package hashcode.training;
 
 import java.util.ArrayList;
 import java.util.List;

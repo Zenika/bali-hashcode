@@ -1,4 +1,4 @@
-package hashcode;
+package hashcode.training;
 
 public class Solution {
 
