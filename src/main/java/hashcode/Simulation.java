@@ -54,12 +54,12 @@ public class Simulation {
     public static void simpleSolution3(City city) {
         List<Vehicle> availableVehicles = city.vehicles;
         List<Ride> availableRides = city.rides;
-        for (int i = 0; i < city.steps; i++) {
+        for (int currentStep = 0; currentStep < city.steps; currentStep++) {
             for (Vehicle vehicle : city.vehicles) {
                 if (vehicle.step == 0) {
                     Optional<Ride> ride2 = city.rides.stream().filter(r ->
                             r.available).findFirst();
-                    if (ride2.isPresent()) {
+                    if (ride2.isPresent() && currentStep + nbStepNecessary(ride2.get(), vehicle) < city.steps) {
                         Ride ride = ride2.get();
                         ride.available = false;
                         vehicle.currentRide = ride;
@@ -72,5 +72,9 @@ public class Simulation {
             }
         }
 
+    }
+
+    static int nbStepNecessary(Ride ride, Vehicle vehicle) {
+        return Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
     }
 }
