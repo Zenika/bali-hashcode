@@ -10,9 +10,10 @@ public class RideFinder {
         Ride best = null;
 
         for (Ride ride : city.rides) {
-            if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) < city.steps) {
+            if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > ride.latestFinish) {
                 continue;
             }
+            //Simulation.log("ok find closest");
 
             int distanceFromStart = Simulation.getDistanceFromStart(vehicle, ride);
             int startStep = step + distanceFromStart;
