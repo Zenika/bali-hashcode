@@ -12,5 +12,6 @@ public class City {
     int steps;
 
     List<Ride> rides = new ArrayList<>();
+    List<Vehicle> vehicles = new ArrayList<>();
 
 }

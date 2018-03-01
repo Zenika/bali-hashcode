@@ -16,4 +16,10 @@ public class Simulation {
     public boolean isEnded() {
         return true;
     }
+
+    public static void simpleSolution(City city) {
+        for (int i = 0; i < city.nbVehicules; i++) {
+            city.vehicles[i].rides.add(city.rides[i]);
+        }
+    }
 }
