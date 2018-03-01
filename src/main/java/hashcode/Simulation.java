@@ -55,14 +55,15 @@ public class Simulation {
         List<Vehicle> availableVehicles = city.vehicles;
         List<Ride> availableRides = city.rides;
         for (int currentStep = 0; currentStep < city.steps; currentStep++) {
-            System.err.println("current step " + currentStep);
+            System.err.println("step " + currentStep);
             for (Vehicle vehicle : city.vehicles) {
-                System.err.println("current vehicle " + vehicle.id);
+                System.err.println("vehicle " + vehicle.id);
                 if (vehicle.step == 0) {
                     System.err.println("vehicle dispo " + vehicle.id);
                     Optional<Ride> ride2 = RideFinder.findClosestRide(city, currentStep, vehicle);
-                    if (ride2.isPresent() && currentStep + nbStepNecessary(ride2.get(), vehicle) < city.steps) {
+                    if (ride2.isPresent()) {
                         Ride ride = ride2.get();
+                        System.err.println("ride associé" + ride.id + " avec vehicle " + vehicle.id);
                         ride.available = false;
                         vehicle.currentRide = ride;
                         vehicle.rides.add(ride);
@@ -73,10 +74,11 @@ public class Simulation {
                 }
             }
         }
-
     }
 
     public static int nbStepNecessary(Ride ride, Vehicle vehicle) {
-        return Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
+        int distance = Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
+        System.err.println("Distance " + distance);
+        return distance;
     }
 }
