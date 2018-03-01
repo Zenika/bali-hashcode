@@ -56,7 +56,7 @@ public class Simulation {
 
     public static void simpleSolution3(City city) {
         List<Vehicle> availableVehicles = city.vehicles;
-        logError("Nb de vehicles total " + city.nbVehicules + ", nb rides total " + city.rides.size());
+        logError("Nb de vehicles total " + city.nbVehicules + ", nb rides total " + city.rides.size() + " nb steps " + city.steps);
         for (int currentStep = 0; currentStep < city.steps && city.rides.size() > 0; currentStep++) {
             logError("step " + currentStep);
             for (Vehicle vehicle : city.vehicles) {

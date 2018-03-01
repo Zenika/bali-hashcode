@@ -10,6 +10,8 @@ public class RideFinder {
         }
         Ride best = null;
         int distanceFromStartBest = Integer.MAX_VALUE;
+        int startStepBest = Integer.MAX_VALUE;
+        int bonusBest = 0;
 
         for (Ride ride : city.rides) {
             if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > ride.latestFinish) {
@@ -23,15 +25,18 @@ public class RideFinder {
             }*/
 
             if(best == null) {
-                Simulation.log("best null ride " + ride.id + ", vehiccle " + vehicle.id + " distance start " + distanceFromStart);
+                Simulation.log("best null ride " + ride.id + ", vehicle " + vehicle.id + " distance start " + distanceFromStart);
                 best = ride;
                 distanceFromStartBest = distanceFromStart;
+                startStepBest = startStep;
+                //bonusBest = ride.
             } else {
-                if(distanceFromStart < distanceFromStartBest) {
-                    Simulation.log("meilleur ride " + ride.id + ", vehiccle " + vehicle.id + " distance start " + distanceFromStart);
+                if(distanceFromStart + startStep < distanceFromStartBest + startStepBest) {
+                    Simulation.log("meilleur ride " + ride.id + ", vehicle " + vehicle.id + " distance start " + distanceFromStart + ", startstep " + startStep);
 
                     best = ride;
                     distanceFromStartBest = distanceFromStart;
+                    startStepBest = startStep;
                     if (distanceFromStart == 0) {
                         Simulation.log("Meilleur ride distance 0");
                         return Optional.ofNullable(best);

@@ -76,6 +76,7 @@ task submit (type: Exec, group: 'hashcode') {
     inputs.files(fileTree(solutionsDir))
     outputs.files(fileTree(solutionsDir))
     //dependsOn 'generateAll'
+    dependsOn 'sourcesJar'
     workingDir npmToolsDir
     def cmd = commandExec('npm run upload')
     commandLine cmd
