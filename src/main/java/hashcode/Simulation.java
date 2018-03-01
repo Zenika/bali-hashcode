@@ -60,7 +60,7 @@ public class Simulation {
             logError("step " + currentStep);
             for (Vehicle vehicle : city.vehicles) {
                 //log("vehicle " + vehicle.id);
-                if (vehicle.step == 0) {
+                if (vehicle.nextAvailableStep == currentStep) {
                     log("vehicle dispo " + vehicle.id);
                     Optional<Ride> ride2 = RideFinder.findClosestRide(city, currentStep, vehicle);
                     if (ride2.isPresent()) {
@@ -70,10 +70,9 @@ public class Simulation {
                         vehicle.currentRide = ride;
                         vehicle.rides.add(ride);
                         vehicle.step = Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
+                        vehicle.nextAvailableStep = vehicle.step;
                         city.rides.remove(ride);
                     }
-                } else {
-                    vehicle.step--;
                 }
             }
         }
