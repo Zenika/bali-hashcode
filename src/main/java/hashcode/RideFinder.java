@@ -1,23 +1,32 @@
 package hashcode;
 
+import hashcode.training.Solution;
+
 import java.util.Optional;
 
 public class RideFinder {
 
     public static Optional<Ride> findClosestRide(City city, int step, Vehicle vehicle) {
         Ride best = null;
+
         for (Ride ride : city.rides) {
-            if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > city.steps) {
+            if (!ride.available || step > ride.latestFinish || step + Simulation.nbStepNecessary(ride, vehicle) > ride.latestFinish) {
+                continue;
+            }
+            //Simulation.log("ok find closest");
+
+            int distanceFromStart = Simulation.getDistanceFromStart(vehicle, ride);
+            int startStep = step + distanceFromStart;
+            if(startStep < ride.earlestStart) {
                 continue;
             }
 
-            if(step + Simulation.getDistanceFromStart(vehicle, ride) < ride.earlestStart) {
-                continue;
+
+            if(best == null) {
+                best = ride;
+            } else if(distanceFromStart < Simulation.getDistanceFromStart(vehicle, best)) {
+                best = ride;
             }
-
-
-            best = ride;
-            break;
         }
 
         return Optional.ofNullable(best);
