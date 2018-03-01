@@ -56,6 +56,7 @@ public class Simulation {
 
     public static void simpleSolution3(City city) {
         List<Vehicle> availableVehicles = city.vehicles;
+        logError("Nb de vehicles " + city.nbVehicules);
         for (int currentStep = 0; currentStep < city.steps && city.rides.size() > 0; currentStep++) {
             logError("step " + currentStep);
             for (Vehicle vehicle : city.vehicles) {
@@ -65,12 +66,14 @@ public class Simulation {
                     Optional<Ride> ride2 = RideFinder.findClosestRide(city, currentStep, vehicle);
                     if (ride2.isPresent()) {
                         Ride ride = ride2.get();
-                        log("ride associe " + ride.id + " avec vehicle " + vehicle.id);
                         ride.available = false;
                         vehicle.currentRide = ride;
                         vehicle.rides.add(ride);
-                        vehicle.step = Simulation.getRideDistance(ride) + Simulation.getDistanceFromStart(vehicle, ride);
+                        int rideDistance = Simulation.getRideDistance(ride);
+                        int distanceFromStart = Simulation.getDistanceFromStart(vehicle, ride);
+                        vehicle.step = rideDistance + distanceFromStart;
                         vehicle.nextAvailableStep = vehicle.step;
+                        log("step " + currentStep + " :  ride associe " + ride.id + " distance from start " + distanceFromStart + ", distance " + rideDistance + " avec vehicle " + vehicle.id + " - sera dispo step " + vehicle.nextAvailableStep);
                         city.rides.remove(ride);
                     }
                 }
@@ -85,7 +88,7 @@ public class Simulation {
     }
     
     public static void log(String msg) {
-        //System.err.println(msg);
+        System.err.println(msg);
         
     }
     public static void logError(String msg) {
