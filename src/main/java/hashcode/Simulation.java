@@ -13,6 +13,14 @@ public class Simulation {
     }
 
 
+    public static int getDistanceFromStart(Vehicle vehicule, Ride ride) {
+        return Math.abs(vehicule.currentRow - ride.rowStart) + Math.abs(vehicule.currentColumn - ride.columnStart);
+    }
+
+    public static int getDistanceFromEnd(Vehicle vehicule, Ride ride) {
+        return Math.abs(vehicule.currentRow - ride.rowEnd) + Math.abs(vehicule.currentColumn - ride.columnEnd);
+    }
+
     public boolean isEnded() {
         return true;
     }
