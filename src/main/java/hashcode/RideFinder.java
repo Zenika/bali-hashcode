@@ -5,6 +5,9 @@ import java.util.Optional;
 public class RideFinder {
 
     public static Optional<Ride> findClosestRide(City city, int step, Vehicle vehicle) {
+        if (city.rides.isEmpty()) {
+            return Optional.empty();
+        }
         Ride best = null;
         int distanceFromStartBest = Integer.MAX_VALUE;
 
@@ -36,8 +39,11 @@ public class RideFinder {
                 }
             }
         }
-
-        Simulation.log("Meilleur ride " + best.id + ", vehiccle " + vehicle.id + " distance start " + distanceFromStartBest);
+        if (best == null) {
+            Simulation.log("Aucun ride dispo");
+            return Optional.empty();
+        }
+        Simulation.log("Meilleur ride " + best.id + ", vehicle " + vehicle.id + " distance start " + distanceFromStartBest);
         return Optional.ofNullable(best);
     }
 }
