@@ -21,6 +21,10 @@ public class Simulation {
         return Math.abs(vehicule.currentRow - ride.rowEnd) + Math.abs(vehicule.currentColumn - ride.columnEnd);
     }
 
+    public static int getRideDistance(Ride ride) {
+        return ride.columnEnd - ride.columnStart + ride.rowEnd - ride.rowStart;
+    }
+
     public boolean isEnded() {
         return true;
     }
