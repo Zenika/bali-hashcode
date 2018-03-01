@@ -60,9 +60,7 @@ public class Simulation {
         int i = 0;
         Collections.sort(city.rides, Comparator.comparingInt(r -> r.earlestStart));
         for (Ride r : city.rides) {
-            while (i < city.nbVehicules && !(city.vehicles.get(i).addRide(r, city))) {
-                i++;
-            }
+            r.findBestVehicle(city);
         }
     }
 

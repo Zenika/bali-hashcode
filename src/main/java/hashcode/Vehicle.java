@@ -23,14 +23,20 @@ public class Vehicle {
     }
 
     public boolean addRide(Ride ride, City city) {
-        if (this.rides.isEmpty()) {
+        if (canAddRide(ride,city)) {
             this.rides.add(ride);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canAddRide(Ride ride, City city) {
+        if (this.rides.isEmpty()) {
             return true;
         }
         Ride lastRide = this.rides.get(rides.size()-1);
         Pair<Integer,Integer> lastPair = new Pair<>(lastRide.rowEnd,lastRide.columnEnd);
         if (dist(lastPair, new Pair<>(ride.rowStart, ride.columnStart)) <= city.steps-this.timePassed()) {
-            this.rides.add(ride);
             return true;
         }
         return false;
