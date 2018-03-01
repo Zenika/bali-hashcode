@@ -19,7 +19,7 @@ public class Main {
         city.steps = scanner.nextInt();
         scanner.nextLine();
         for (int v = 0; v < city.nbVehicules; v++)
-            city.vehicles.add(new Vehicle());
+            city.vehicles.add(new Vehicle(v));
         for(int i = 0; i < city.nbRides; i++) {
             Ride ride = new Ride();
             ride.id = i;
