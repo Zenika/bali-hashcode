@@ -1,3 +1,4 @@
+import java.nio.file.Files
 import java.nio.file.Paths
 
 group 'hashcode.bali'
@@ -72,8 +73,8 @@ task download (type: Exec, group: 'hashcode') {
 }
 
 task submit (type: Exec, group: 'hashcode') {
-    inputs.files(fileTree("${buildDir}/libs/"))
-    outputs.files(fileTree("${buildDir}/libs/"))
+    inputs.files(fileTree(solutionsDir))
+    outputs.files(fileTree(solutionsDir))
     dependsOn 'generateAll'
     workingDir npmToolsDir
     def cmd = commandExec('npm run upload')
@@ -92,7 +93,7 @@ task npmInstallHugoTool(type: Exec, group: 'hashcode init env') {
     commandLine cmd
 }
 
-task createEnvFIle(group: 'hashcode init env') {
+task createEnvFile(group: 'hashcode init env') {
     doLast {
         def token = ant.input(message: '> Veuillez entrer votre token: ',  addproperty: 'token')
         new File("${npmToolsDir}/.env").write("""\
@@ -103,6 +104,18 @@ task createEnvFIle(group: 'hashcode init env') {
             |TAG_ON_UPLOAD=false
             """.stripMargin())
     }
+}
+
+task initHugoTool(type: GradleBuild, group: 'hashcode init env') {
+    def tasks = []
+    if (Files.notExists(Paths.get(projectDir.toString(), npmToolsDir))) {
+        tasks << 'gitCloneHugoTool'
+    }
+    tasks << 'npmInstallHugoTool' << 'createEnvFile'
+    setTasks(tasks)
+    /*dependsOn npmInstallHugoTool
+    dependsOn createEnvFile
+    tasks.*/
 }
 
 def commandExec(def cmd) {
