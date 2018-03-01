@@ -20,7 +20,8 @@ public class Main {
             ride.rowEnd = scanner.nextInt();
             ride.columnEnd = scanner.nextInt();
             ride.earlestStart = scanner.nextInt();
-            ride.latestStart = scanner.nextInt();
+            ride.latestFinish = scanner.nextInt();
+            city.rides.add(ride);
         }
 
         // TODO Resolve
