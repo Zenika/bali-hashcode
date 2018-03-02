@@ -18,6 +18,7 @@ public class Main {
         city.rideBonus = scanner.nextInt();
         city.steps = scanner.nextInt();
         scanner.nextLine();
+
         for (int v = 0; v < city.nbVehicules; v++)
             city.vehicles.add(new Vehicle(v));
         for(int i = 0; i < city.nbRides; i++) {
@@ -31,7 +32,9 @@ public class Main {
             ride.latestFinish = scanner.nextInt();
             city.rides.add(ride);
         }
+
         Simulation.simpleSolution3(city);
+
         // TODO Resolve
 
         printVehicules(city.vehicles);
@@ -43,6 +46,5 @@ public class Main {
             System.out.print(" ");
             System.out.println(vehicle.rides.stream().map(r -> Integer.toString(r.id)).collect(Collectors.joining((" "))));
         }
-
     }
 }
