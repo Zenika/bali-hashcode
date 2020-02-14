@@ -15,6 +15,7 @@ Créer un fichier .env à la racine de ce projet
 HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
 DOWNLOAD_DIR=../sumba-hashcode/src/main/resources/input/
 BUILD_DIR=../sumba-hashcode/build/libs/
+SOLUTION_DIR=../sumba-hashcode/build/solutions
 TAG_ON_UPLOAD=false
 ```
 
