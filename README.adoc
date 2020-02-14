@@ -5,14 +5,16 @@ https://github.com/Zenika/bali-hashcode
 ## Configuration de l'outillage d'Hugo
 
 Faire dans le dossier parent de bali-hashcode
-`git clone https://github.com/hgwood/hash-code-2018-training/`
+`git clone https://github.com/hgwood/hash-code-tooling/`
+
+Créer un répertoire `build/solutions`
 
 Créer un fichier .env à la racine de ce projet
 (Mettre un token valide en le récupérant quand le devtools du judge quand on fait soumission manuel, requête createurl)
 ```
 HASH_CODE_JUDGE_AUTH_TOKEN=ya29.Gl1wBXcTHKwTJlr0tIijmbI_pNCrXZsMMy_clmuUdZ2zkMTGHVoLcGb2QXCxVNdRMrg_70m9fKCT-6hYhpJwdzOh6wi-olpbcI_Lt6mgkXIWEgQVyDejsUnZZCp-Mw8f
-DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
-BUILD_DIR=../bali-hashcode/build/libs/
+DOWNLOAD_DIR=../sumba-hashcode/src/main/resources/input/
+BUILD_DIR=../sumba-hashcode/build/libs/
 TAG_ON_UPLOAD=false
 ```
 
@@ -21,11 +23,11 @@ Faire un `npm install`
 
 Le résultat est donc un répertoire parent contenant :
 
-* bali-hashcode
-** Code source de bali-hashcode
-* hash-code-2018-training
+* sumba-hashcode
+** Code source de sumba-hashcode
+* hash-code-tooling
 ** .env créé
-** Code source de hash-code-2018-training
+** Code source de hash-code-tooling
 
 ## Téléchargement des fichiers input + problème
 `gradle download`

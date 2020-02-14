@@ -1,7 +1,7 @@
 import java.nio.file.Files
 import java.nio.file.Paths
 
-group 'hashcode.bali'
+group 'hashcode.sumba'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -15,24 +15,27 @@ repositories {
 dependencies {
 }
 
-def npmToolsDir = '../hash-code-2018-training'
-def npmRepoUrl = 'https://github.com/hgwood/hash-code-2018-training/'
+def npmToolsDir = '../hash-code-tooling'
+def npmRepoUrl = 'https://github.com/hgwood/hash-code-tooling/'
 def solutionsDir = "${buildDir}/solutions"
 def inputDir = "${buildDir}/resources/main/input/"
 
 def inputFiles = new File(inputDir).listFiles().findAll{it.isFile() && it.name.endsWith(".txt")}
 inputFiles.each {
     input ->
-        def fichierSansExtension = input.name.split("\\.")[0]
-        tasks.create(name: "generate-$fichierSansExtension", type: BaliTask, group: 'hashcode') {
-            inputFile input
-            outputFile "${solutionsDir}/${fichierSansExtension}.out.txt"
-            classpath sourceSets.main.runtimeClasspath
-            main = "hashcode.Main"
+        def fichierName = input.name.split("\\.")
+        if (fichierName[1] == "in") {
+            def fichierSansExtension = fichierName[0]
+            tasks.create(name: "generate-$fichierSansExtension", type: SumbaTask, group: 'hashcode') {
+                inputFile input
+                outputFile "${solutionsDir}/${fichierSansExtension}.out.txt"
+                classpath sourceSets.main.runtimeClasspath
+                main = "hashcode.Main"
+            }
         }
 }
 
-class BaliTask extends JavaExec {
+class SumbaTask extends JavaExec {
     def inputFile
     def outputFile
     @TaskAction
@@ -99,9 +102,9 @@ task createEnvFile(group: 'hashcode init env') {
         def token = ant.input(message: '> Veuillez entrer votre token: ',  addproperty: 'token')
         new File("${npmToolsDir}/.env").write("""\
             |HASH_CODE_JUDGE_AUTH_TOKEN=$ant.token
-            |DOWNLOAD_DIR=../bali-hashcode/src/main/resources/input/
-            |BUILD_DIR=../bali-hashcode/build/libs/
-            |SOLUTION_DIR=../bali-hashcode/build/solutions/
+            |DOWNLOAD_DIR=../sumba-hashcode/src/main/resources/input/
+            |BUILD_DIR=../sumba-hashcode/build/libs/
+            |SOLUTION_DIR=../sumba-hashcode/build/solutions/
             |TAG_ON_UPLOAD=false
             """.stripMargin())
     }
