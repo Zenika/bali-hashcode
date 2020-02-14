@@ -113,7 +113,7 @@ task createEnvFile(group: 'hashcode init env') {
 task initHugoTool(type: GradleBuild, group: 'hashcode init env') {
     def tasks = []
     if (Files.notExists(Paths.get(buildDir.toString(), "solutions"))) {
-        Files.createDirectory(Paths.get(buildDir.toString(), "solutions"))
+        Files.createDirectories(Paths.get(buildDir.toString(), "solutions"))
     }
     if (Files.notExists(Paths.get(projectDir.toString(), npmToolsDir))) {
         tasks << 'gitCloneHugoTool'
