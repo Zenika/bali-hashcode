@@ -1,8 +1,19 @@
 # Hashcode 2018
 
-https://github.com/Zenika/bali-hashcode
+https://github.com/Zenika/sumba-hashcode
 
-## Configuration de l'outillage d'Hugo
+
+## Configuration de l'outillage d'Hugo automatique
+
+`gradle gitCloneHugoTool`
+
+Executer `sh ../hash-code-tooling/gcloud-auth-init.sh`
+
+`gradle initHugoTool`
+
+Il va demander un token, à chercher avec les dev tools
+
+## Configuration de l'outillage d'Hugo manuel
 
 Faire dans le dossier parent de bali-hashcode
 `git clone https://github.com/hgwood/hash-code-tooling/`
