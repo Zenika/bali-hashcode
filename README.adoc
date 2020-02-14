@@ -15,10 +15,10 @@ Il va demander un token, à chercher avec les dev tools
 
 ## Configuration de l'outillage d'Hugo manuel
 
+Créer un répertoire `build/solutions`
+
 Faire dans le dossier parent de bali-hashcode
 `git clone https://github.com/hgwood/hash-code-tooling/`
-
-Créer un répertoire `build/solutions`
 
 Créer un fichier .env à la racine de ce projet
 (Mettre un token valide en le récupérant quand le devtools du judge quand on fait soumission manuel, requête createurl)
