@@ -46,7 +46,9 @@ public class Main {
                 .sorted(Comparator.comparing(l -> -l.score))
                 .collect(Collectors.toList());
 
-        // TODO Resolve
+        Collections.reverse(sortedLibraries);
+        fetchBooksToSend(sortedLibraries);
+        Collections.reverse(sortedLibraries);
 
         print(sortedLibraries);
     }
@@ -58,6 +60,18 @@ public class Main {
             System.out.println(library.sendBooks.stream().map(b -> b.id.toString()).collect(Collectors.joining(" ")));
         }
 
+    }
+
+    private static void fetchBooksToSend(List<Library> libraries) {
+        Set<Book> blacklist = new HashSet<>();
+        libraries.forEach(library -> {
+            for (Book book : library.books) {
+                if (!blacklist.contains(book)) {
+                    blacklist.add(book);
+                    library.sendBooks.add(book);
+                }
+            }
+        });
     }
 
     private static long getLibraryScore(int nbDays, Library library) {
