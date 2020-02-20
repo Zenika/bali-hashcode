@@ -1,10 +1,6 @@
 package hashcode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.String.join;
@@ -36,6 +32,13 @@ public class Main {
                 library.books.add(book);
             }
         }
+
+        libraries.forEach(library -> {
+            List<Book> sortedBooks = library.books.stream().sorted(Comparator.comparing(b -> b.score)).collect(Collectors.toList());
+            library.books.clear();
+            library.books.addAll(sortedBooks);
+        });
+
 
         // TODO Resolve
 
