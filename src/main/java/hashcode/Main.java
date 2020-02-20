@@ -37,8 +37,7 @@ public class Main {
             List<Book> sortedBooks = library.books.stream()
                     .sorted(Comparator.comparing(b -> -b.score))
                     .collect(Collectors.toList());
-            library.books.clear();
-            library.books.addAll(sortedBooks);
+            library.sendBooks.addAll(sortedBooks);
         });
 
         libraries.parallelStream().forEach(library -> library.score = getLibraryScore(nbDays, library));

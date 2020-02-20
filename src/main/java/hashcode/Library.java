@@ -10,6 +10,7 @@ public class Library {
     public Integer nbDays;
     public Integer nbShipped;
     public List<Book> books = new ArrayList<>();
+    public List<Book> sendBooks = new ArrayList<>();
 
 
     public Library(Integer id, Integer nbBooks, Integer nbDays, Integer nbShipped) {
