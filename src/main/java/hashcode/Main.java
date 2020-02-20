@@ -34,15 +34,22 @@ public class Main {
         }
 
         libraries.forEach(library -> {
-            List<Book> sortedBooks = library.books.stream().sorted(Comparator.comparing(b -> b.score)).collect(Collectors.toList());
+            List<Book> sortedBooks = library.books.stream()
+                    .sorted(Comparator.comparing(b -> b.score))
+                    .sorted(Collections.reverseOrder())
+                    .collect(Collectors.toList());
             library.books.clear();
             library.books.addAll(sortedBooks);
         });
 
 
+        List<Library> sortedLibraries = libraries.stream()
+                .sorted(Comparator.comparing(l -> l.nbDays))
+                .collect(Collectors.toList());
+
         // TODO Resolve
 
-        print(libraries);
+        print(sortedLibraries);
     }
 
     private static void print(List<Library> libraries) {
