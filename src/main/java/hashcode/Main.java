@@ -62,7 +62,7 @@ public class Main {
 
     }
 
-    private static void fetchBooksToSend(List<Library> libraries) {
+    private static List<Library> fetchBooksToSend(List<Library> libraries) {
         Set<Book> blacklist = new HashSet<>();
         libraries.forEach(library -> {
             for (Book book : library.books) {
@@ -72,6 +72,7 @@ public class Main {
                 }
             }
         });
+        return libraries;
     }
 
     private static long getLibraryScore(int nbDays, Library library) {
