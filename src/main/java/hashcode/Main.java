@@ -47,10 +47,10 @@ public class Main {
                 .collect(Collectors.toList());
 
         Collections.reverse(sortedLibraries);
-        fetchBooksToSend(sortedLibraries);
-        Collections.reverse(sortedLibraries);
+        List<Library> filteredLibraries = fetchBooksToSend(sortedLibraries);
+        Collections.reverse(filteredLibraries);
 
-        print(sortedLibraries);
+        print(filteredLibraries);
     }
 
     private static void print(List<Library> libraries) {
