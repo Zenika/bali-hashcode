@@ -55,7 +55,7 @@ public class Main {
         System.out.println(libraries.size());
         for (Library library : libraries) {
             System.out.println(String.format("%d %d", library.id, library.nbBooks));
-            System.out.println(library.books.stream().map(b -> b.id.toString()).collect(Collectors.joining(" ")));
+            System.out.println(library.sendBooks.stream().map(b -> b.id.toString()).collect(Collectors.joining(" ")));
         }
 
     }
