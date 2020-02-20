@@ -46,33 +46,30 @@ public class Main {
                 .sorted(Comparator.comparing(l -> -l.score))
                 .collect(Collectors.toList());
 
-        Collections.reverse(sortedLibraries);
-        List<Library> filteredLibraries = fetchBooksToSend(sortedLibraries);
-        Collections.reverse(filteredLibraries);
-
-        print(filteredLibraries);
+        // fetchBooksToSend(sortedLibraries); buged!
+        print(sortedLibraries);
     }
 
     private static void print(List<Library> libraries) {
         System.out.println(libraries.size());
         for (Library library : libraries) {
-            System.out.println(String.format("%d %d", library.id, library.nbBooks));
+            System.out.println(String.format("%d %d", library.id, library.sendBooks.size()));
             System.out.println(library.sendBooks.stream().map(b -> b.id.toString()).collect(Collectors.joining(" ")));
         }
 
     }
 
-    private static List<Library> fetchBooksToSend(List<Library> libraries) {
+    private static void fetchBooksToSend(List<Library> libraries) {
         Set<Book> blacklist = new HashSet<>();
         libraries.forEach(library -> {
-            for (Book book : library.books) {
-                if (!blacklist.contains(book)) {
-                    blacklist.add(book);
-                    library.sendBooks.add(book);
-                }
-            }
+            library.sendBooks.clear();
+            library.books.stream()
+                    .filter(book -> !blacklist.contains(book))
+                    .forEach(book -> {
+                        library.sendBooks.add(book);
+                        blacklist.add(book);
+                    });
         });
-        return libraries;
     }
 
     private static long getLibraryScore(int nbDays, Library library) {
@@ -92,7 +89,7 @@ public class Main {
         long score = 0;
 
         for (int i = 0; i < nbBooks; i++) {
-            if (library.books.size() > i){
+            if (library.books.size() > i) {
                 score += library.books.get(i).score;
             }
         }
