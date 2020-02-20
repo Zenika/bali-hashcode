@@ -43,7 +43,7 @@ public class Main {
 
 
         List<Library> sortedLibraries = libraries.stream()
-                .sorted(Comparator.comparing(l -> l.nbDays))
+                .sorted(Comparator.comparing(l -> -getLibraryScore(nbDays, l)))
                 .collect(Collectors.toList());
 
         // TODO Resolve
@@ -58,5 +58,27 @@ public class Main {
             System.out.println(library.books.stream().map(b -> b.id.toString()).collect(Collectors.joining(" ")));
         }
 
+    }
+
+    private static long getLibraryScore(int nbDays, Library library) {
+        int currentNbDay;
+        int nbBooks;
+        // Calculer le nombre de jours effectifs
+        // A améliorer
+        currentNbDay = nbDays - library.nbDays;
+
+        // Calculer le nombre de livre envoyable
+        nbBooks = currentNbDay * library.nbShipped;
+
+        // Calculer le score de ces livres
+        long score = 0;
+
+        for (int i = 0; i < nbBooks; i++) {
+            if (library.books.size() > i){
+                score += library.books.get(i).score;
+            }
+        }
+
+        return score;
     }
 }
