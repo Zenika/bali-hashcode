@@ -35,8 +35,7 @@ public class Main {
 
         libraries.forEach(library -> {
             List<Book> sortedBooks = library.books.stream()
-                    .sorted(Comparator.comparing(b -> b.score))
-                    .sorted(Collections.reverseOrder())
+                    .sorted(Comparator.comparing(b -> -b.score))
                     .collect(Collectors.toList());
             library.books.clear();
             library.books.addAll(sortedBooks);
