@@ -41,9 +41,10 @@ public class Main {
             library.books.addAll(sortedBooks);
         });
 
+        libraries.parallelStream().forEach(library -> library.score = getLibraryScore(nbDays, library));
 
         List<Library> sortedLibraries = libraries.stream()
-                .sorted(Comparator.comparing(l -> -getLibraryScore(nbDays, l)))
+                .sorted(Comparator.comparing(l -> -l.score))
                 .collect(Collectors.toList());
 
         // TODO Resolve

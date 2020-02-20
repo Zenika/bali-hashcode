@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
+    public Long score;
     public Integer id;
     public Integer nbBooks;
     public Integer nbDays;
