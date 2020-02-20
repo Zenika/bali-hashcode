@@ -46,7 +46,10 @@ public class Main {
                 .sorted(Comparator.comparing(l -> -l.score))
                 .collect(Collectors.toList());
 
-        // fetchBooksToSend(sortedLibraries); buged!
+        fetchBooksToSend(sortedLibraries);
+
+        sortedLibraries = sortedLibraries.stream().filter(library -> library.sendBooks.size() > 0).collect(Collectors.toList());
+
         print(sortedLibraries);
     }
 
@@ -78,8 +81,8 @@ public class Main {
         // Calculer le nombre de jours effectifs
         // A améliorer
         currentNbDay = nbDays - library.nbDays;
-        if (currentNbDay > 20) {
-            currentNbDay = 20;
+        if (currentNbDay > 30) {
+            currentNbDay = 30;
         }
 
         // Calculer le nombre de livre envoyable
