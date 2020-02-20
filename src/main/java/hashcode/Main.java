@@ -67,6 +67,9 @@ public class Main {
         // Calculer le nombre de jours effectifs
         // A améliorer
         currentNbDay = nbDays - library.nbDays;
+        if (currentNbDay > 20) {
+            currentNbDay = 20;
+        }
 
         // Calculer le nombre de livre envoyable
         nbBooks = currentNbDay * library.nbShipped;
